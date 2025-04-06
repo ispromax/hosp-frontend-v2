@@ -15,22 +15,36 @@ const PatientForm = () => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
 
-    try {
-      const response = await fetch("https://your-app.onrender.com/api/patients/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-      const result = await response.json();
-      setMessage(result.message || "Registered successfully!");
-    } catch (error) {
-      setMessage("Something went wrong.");
+  const patientData = { first_name, last_name, age, gender, phone, email };
+
+  try {
+    const response = await fetch('https://hosp-backend-v2.onrender.com/api/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(patientData),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      alert('Patient registered successfully!');
+      console.log(data);
+      // Optionally reset form here
+    } else {
+      const err = await response.text();
+      alert('Error: ' + err);
     }
-  };
+  } catch (error) {
+    console.error('Error submitting form:', error);
+    alert('Something went wrong!');
+  }
+};
+
 
   return (
     <div style={{ padding: "2rem", maxWidth: "400px", margin: "auto" }}>
