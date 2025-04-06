@@ -27,7 +27,15 @@ const handleSubmit = async (e) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(patientData),
+      //body: JSON.stringify(patientData),
+		body: JSON.stringify({
+		first_name: "Imran",
+		last_name: "Khan",
+		age: 30,
+		gender: "Male",
+		phone: "1234567890",
+		email: "imran@example.com"
+		}),
     });
 
     if (response.ok) {
